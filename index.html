@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Jain Super Mart</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <header class="topbar">
+    <div class="brand" onclick="window.location.href='index.html'">Jain Super Mart</div>
+    <div class="actions">
+      <input id="search" placeholder="Search products..." oninput="filterProducts()" />
+      <button class="cart-btn" onclick="window.location.href='cart.html'">🛒 Cart (<span id="cart-count">0</span>)</button>
+    </div>
+  </header>
+
+  <main class="layout">
+    <aside class="sidebar">
+      <h4>Categories</h4>
+      <ul>
+        <li><button onclick="filterCategory('all')" class="link">All</button></li>
+        <li><button onclick="filterCategory('dairy')" class="link">Dairy</button></li>
+        <li><button onclick="filterCategory('beverages')" class="link">Beverages</button></li>
+        <li><button onclick="filterCategory('bakery')" class="link">Bakery</button></li>
+        <li><button onclick="filterCategory('essentials')" class="link">Essentials</button></li>
+        <li><button onclick="filterCategory('snacks')" class="link">Snacks</button></li>
+      </ul>
+    </aside>
+    <section class="content">
+      <div class="toolbar">
+        <span id="result-count"></span>
+        <select id="sort" onchange="sortProducts()">
+          <option value="">Sort</option>
+          <option value="price-asc">Price: Low to High</option>
+          <option value="price-desc">Price: High to Low</option>
+          <option value="name-asc">Name: A → Z</option>
+        </select>
+      </div>
+      <section class="products" id="product-list">
+        <!-- Product cards injected by script.js -->
+      </section>
+    </section>
+  </main>
+
+  <div id="modal" class="modal hidden">
+    <div class="modal-card">
+      <button class="close" onclick="closeModal()">×</button>
+      <img id="m-img" alt="" />
+      <h3 id="m-title"></h3>
+      <p id="m-desc"></p>
+      <p id="m-price" class="price"></p>
+      <button id="m-add" onclick="">Add to Cart</button>
+    </div>
+  </div>
+
+  <footer>
+    <small>© Jain Super Mart — demo static site</small>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
