@@ -4,59 +4,70 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Jain Super Mart</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-
   <header class="topbar">
-    <div class="brand" onclick="window.location.href='index.html'">Jain Super Mart</div>
+    <div class="brand" onclick="window.location.href='index.html'">🛍️ Jain Super Mart</div>
     <div class="actions">
       <input id="search" placeholder="Search products..." oninput="filterProducts()" />
-      <button class="cart-btn" onclick="window.location.href='cart.html'">🛒 Cart (<span id="cart-count">0</span>)</button>
+      <button class="cart-btn" onclick="window.location.href='cart.html'">🛒 <span id="cart-count">0</span></button>
     </div>
   </header>
 
-  <main class="layout">
-    <aside class="sidebar">
-      <h4>Categories</h4>
-      <ul>
-        <li><button onclick="filterCategory('all')" class="link">All</button></li>
-        <li><button onclick="filterCategory('dairy')" class="link">Dairy</button></li>
-        <li><button onclick="filterCategory('beverages')" class="link">Beverages</button></li>
-        <li><button onclick="filterCategory('bakery')" class="link">Bakery</button></li>
-        <li><button onclick="filterCategory('essentials')" class="link">Essentials</button></li>
-        <li><button onclick="filterCategory('snacks')" class="link">Snacks</button></li>
-      </ul>
-    </aside>
-    <section class="content">
-      <div class="toolbar">
-        <span id="result-count"></span>
-        <select id="sort" onchange="sortProducts()">
-          <option value="">Sort</option>
-          <option value="price-asc">Price: Low to High</option>
-          <option value="price-desc">Price: High to Low</option>
-          <option value="name-asc">Name: A → Z</option>
-        </select>
+  <section class="hero">
+    <div class="hero-text">
+      <h1>Fresh. Fast. Affordable.</h1>
+      <p>Daily essentials delivered near you. Handpicked products at best prices.</p>
+      <div class="chips" id="chipbar">
+        <button class="chip active" data-cat="all" onclick="filterCategoryFromChip(event)">All</button>
+        <button class="chip" data-cat="dairy" onclick="filterCategoryFromChip(event)">Dairy</button>
+        <button class="chip" data-cat="beverages" onclick="filterCategoryFromChip(event)">Beverages</button>
+        <button class="chip" data-cat="bakery" onclick="filterCategoryFromChip(event)">Bakery</button>
+        <button class="chip" data-cat="essentials" onclick="filterCategoryFromChip(event)">Essentials</button>
+        <button class="chip" data-cat="snacks" onclick="filterCategoryFromChip(event)">Snacks</button>
       </div>
-      <section class="products" id="product-list">
-        <!-- Product cards injected by script.js -->
-      </section>
-    </section>
-  </main>
+    </div>
+    <img class="hero-img" src="https://images.unsplash.com/photo-1515003197210-e0cd71810b5f?auto=format&fit=crop&w=1200&q=60" alt="Groceries" />
+  </section>
+
+  <div class="toolbar">
+    <span id="result-count"></span>
+    <select id="sort" onchange="sortProducts()">
+      <option value="">Sort</option>
+      <option value="price-asc">Price: Low to High</option>
+      <option value="price-desc">Price: High to Low</option>
+      <option value="name-asc">Name: A → Z</option>
+    </select>
+  </div>
+
+  <main class="products" id="product-list"></main>
 
   <div id="modal" class="modal hidden">
     <div class="modal-card">
       <button class="close" onclick="closeModal()">×</button>
       <img id="m-img" alt="" />
-      <h3 id="m-title"></h3>
-      <p id="m-desc"></p>
-      <p id="m-price" class="price"></p>
-      <button id="m-add" onclick="">Add to Cart</button>
+      <div class="m-body">
+        <h3 id="m-title"></h3>
+        <p id="m-desc" class="muted"></p>
+        <div class="row">
+          <span id="m-price" class="price"></span>
+          <button id="m-add" class="primary">Add to Cart</button>
+        </div>
+      </div>
     </div>
   </div>
 
   <footer>
-    <small>© Jain Super Mart — demo static site</small>
+    <div>© Jain Super Mart — demo</div>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="cart.html">Cart</a>
+      <a href="checkout.html">Checkout</a>
+    </nav>
   </footer>
 
   <script src="script.js"></script>
