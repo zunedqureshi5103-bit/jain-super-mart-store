@@ -1,0 +1,82 @@
+[
+  {
+    "id": "atta-ashirvaad-5kg",
+    "name": "Atta (Aashirvaad) 5kg",
+    "brand": "Aashirvaad",
+    "category": "atta-flour",
+    "price": 265,
+    "unit": "5 kg",
+    "img": "https://images.unsplash.com/photo-1586201375761-83865001e31b?q=80&w=800&auto=format",
+    "desc": "Fresh whole wheat flour."
+  },
+  {
+    "id": "rice-basmati-1kg",
+    "name": "Basmati Rice 1kg",
+    "brand": "Dawat",
+    "category": "rice",
+    "price": 145,
+    "unit": "1 kg",
+    "img": "https://images.unsplash.com/photo-1604908176997-43165144d70d?q=80&w=800&auto=format",
+    "desc": "Long-grain aromatic rice."
+  },
+  {
+    "id": "dal-toor-1kg",
+    "name": "Toor Dal 1kg",
+    "brand": "Local",
+    "category": "dal-pulses",
+    "price": 159,
+    "unit": "1 kg",
+    "img": "https://images.unsplash.com/photo-1623065427900-89ad29d14035?q=80&w=800&auto=format",
+    "desc": "Clean, quality pulses."
+  },
+  {
+    "id": "oil-sunflower-1l",
+    "name": "Sunflower Oil 1L",
+    "brand": "Fortune",
+    "category": "oil-ghee",
+    "price": 135,
+    "unit": "1 L",
+    "img": "https://images.unsplash.com/photo-1542444459-db63c7b77f6b?q=80&w=800&auto=format",
+    "desc": "Refined sunflower oil."
+  },
+  {
+    "id": "salt-tata-1kg",
+    "name": "Iodized Salt 1kg",
+    "brand": "Tata",
+    "category": "salt-sugar",
+    "price": 22,
+    "unit": "1 kg",
+    "img": "https://images.unsplash.com/photo-1600490036275-35f0b14f9c69?q=80&w=800&auto=format",
+    "desc": "Iodized free-flowing salt."
+  },
+  {
+    "id": "sugar-1kg",
+    "name": "Sugar 1kg",
+    "brand": "Local",
+    "category": "salt-sugar",
+    "price": 48,
+    "unit": "1 kg",
+    "img": "https://images.unsplash.com/photo-1505577058444-a3dab90d4253?q=80&w=800&auto=format",
+    "desc": "Fine white sugar."
+  },
+  {
+    "id": "tea-tajmahal-250g",
+    "name": "Tea (Taj Mahal) 250g",
+    "brand": "Brooke Bond",
+    "category": "tea-coffee",
+    "price": 145,
+    "unit": "250 g",
+    "img": "https://images.unsplash.com/photo-1523906630133-f6934a1ab1b9?q=80&w=800&auto=format",
+    "desc": "Rich flavor tea."
+  },
+  {
+    "id": "detergent-ghadi-1kg",
+    "name": "Detergent Powder 1kg",
+    "brand": "Ghadi",
+    "category": "cleaning-detergent",
+    "price": 75,
+    "unit": "1 kg",
+    "img": "https://images.unsplash.com/photo-1615485737651-6e5d3d3af14d?q=80&w=800&auto=format",
+    "desc": "Powerful stain removal."
+  }
+]
