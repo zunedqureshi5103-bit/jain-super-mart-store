@@ -23,14 +23,17 @@ async function loadProducts() {
       return;
     }
 
+    // ✅ Product Card UI Code
     grid.innerHTML = filtered.map(p => `
       <div class="card">
         <img src="${p.img}" alt="${p.name}" loading="lazy">
-        <h3>${p.name}</h3>
-        <p class="muted">${p.brand} • ${p.unit}</p>
-        <div class="row">
-          <span class="price">₹${p.price}</span>
-          <button onclick="addToCart('${p.id}','${p.name}',${p.price},'${p.img}')">Add</button>
+        <div class="content">
+          <h3>${p.name}</h3>
+          <p class="muted">${p.brand} • ${p.unit}</p>
+          <div class="row">
+            <span class="price">₹${p.price}</span>
+            <button onclick="addToCart('${p.id}','${p.name}',${p.price},'${p.img}')">Add</button>
+          </div>
         </div>
       </div>
     `).join('');
@@ -44,7 +47,8 @@ async function loadProducts() {
 function addToCart(id, name, price, img) {
   const cart = JSON.parse(localStorage.getItem('cart') || '[]');
   const found = cart.find(i => i.id === id);
-  if (found) found.qty += 1; else cart.push({ id, name, price, img, qty: 1 });
+  if (found) found.qty += 1;
+  else cart.push({ id, name, price, img, qty: 1 });
   localStorage.setItem('cart', JSON.stringify(cart));
   updateCartBadge();
 }
