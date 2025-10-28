@@ -1,80 +1,96 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Jain Super Mart — Kota Groceries</title>
-  <link rel="stylesheet" href="/style.css"/>
-</head>
-<body>
-  <!-- Top Bar -->
-  <header class="topbar">
-    <div class="brand">
-      <div class="logo">🛒</div>
-      <div class="brand-text">
-        <h1>Jain Super Mart</h1>
-        <p class="sub">Kota • Fast delivery</p>
+// js/render.js
+let ALL_ITEMS = [];
+let CURRENT_CAT = 'all';
+
+function $(sel){ return document.querySelector(sel); }
+function $all(sel){ return [...document.querySelectorAll(sel)]; }
+
+async function loadProducts() {
+  const grid = $('#product-grid');
+  const countEl = $('#count');
+  grid.innerHTML = '<p>Loading products…</p>';
+
+  try {
+    const res = await fetch('/data/products.json');
+    ALL_ITEMS = await res.json();
+    render();
+    countEl.textContent = `${ALL_ITEMS.length} items`;
+  } catch (e) {
+    console.error(e);
+    grid.innerHTML = '<p>Could not load products.</p>';
+  }
+}
+
+function render() {
+  const grid = $('#product-grid');
+  const q = ($('#search').value || '').toLowerCase();
+
+  let items = ALL_ITEMS.filter(p =>
+    (CURRENT_CAT === 'all' ? true : p.category === CURRENT_CAT) &&
+    (p.name.toLowerCase().includes(q) || p.brand.toLowerCase().includes(q) || p.category.toLowerCase().includes(q))
+  );
+
+  const sort = $('#sort')?.value || 'reco';
+  if (sort === 'price-asc') items.sort((a,b)=>a.price-b.price);
+  if (sort === 'price-desc') items.sort((a,b)=>b.price-a.price);
+  if (sort === 'name-asc') items.sort((a,b)=>a.name.localeCompare(b.name));
+
+  if (items.length === 0) {
+    grid.innerHTML = '<p>No products found.</p>';
+    return;
+  }
+
+  grid.innerHTML = items.map(p => `
+    <div class="card">
+      <img src="${p.img}" alt="${p.name}" loading="lazy">
+      <div class="content">
+        <h3>${p.name}</h3>
+        <p class="muted">${p.brand} • ${p.unit}</p>
+        <div class="row">
+          <span class="price">₹${p.price}</span>
+          <button onclick="addToCart('${p.id}','${p.name}',${p.price},'${p.img}')">Add</button>
+        </div>
       </div>
     </div>
+  `).join('');
+}
 
-    <div class="search-wrap">
-      <input id="search" placeholder="Search rice, dal, oil, detergent…" />
-      <button id="searchBtn">Search</button>
-    </div>
+function addToCart(id, name, price, img){
+  const cart = JSON.parse(localStorage.getItem('cart')||'[]');
+  const it = cart.find(x=>x.id===id);
+  if (it) it.qty += 1; else cart.push({id,name,price,img,qty:1});
+  localStorage.setItem('cart', JSON.stringify(cart));
+  updateBadges();
+}
 
-    <a class="cart-link" href="/cart.html" title="Cart">
-      <span>Cart</span> <span id="cart-badge">0</span>
-    </a>
-  </header>
+function updateBadges(){
+  const cart = JSON.parse(localStorage.getItem('cart')||'[]');
+  const n = cart.reduce((s,i)=>s+i.qty,0);
+  const badge = $('#cart-badge');
+  const fab = $('#fab-badge');
+  if (badge) badge.textContent = n;
+  if (fab) fab.textContent = n;
+}
 
-  <!-- Hero -->
-  <section class="hero">
-    <div class="hero-text">
-      <h2>Daily groceries at honest prices</h2>
-      <p>Fresh staples • Trusted brands • Same-day delivery in Kota</p>
-    </div>
-  </section>
+function wireUI(){
+  // search actions
+  $('#search').addEventListener('keyup', (e)=>{ if(e.key==='Enter') render(); });
+  $('#searchBtn')?.addEventListener('click', ()=> render());
+  $('#sort')?.addEventListener('change', ()=> render());
 
-  <!-- Category chips -->
-  <nav class="chips" id="chips">
-    <button class="chip active" data-cat="all">All</button>
-    <button class="chip" data-cat="atta-flour">Atta & Flour</button>
-    <button class="chip" data-cat="rice">Rice</button>
-    <button class="chip" data-cat="dal-pulses">Dal & Pulses</button>
-    <button class="chip" data-cat="oil-ghee">Oil & Ghee</button>
-    <button class="chip" data-cat="salt-sugar">Salt & Sugar</button>
-    <button class="chip" data-cat="tea-coffee">Tea & Coffee</button>
-    <button class="chip" data-cat="cleaning-detergent">Detergent</button>
-  </nav>
+  // chips
+  $all('.chip').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      $all('.chip').forEach(c=>c.classList.remove('active'));
+      btn.classList.add('active');
+      CURRENT_CAT = btn.dataset.cat;
+      render();
+    });
+  });
+}
 
-  <!-- Sort row -->
-  <div class="toolbar">
-    <div class="left">
-      <strong id="count">0 items</strong>
-    </div>
-    <div class="right">
-      <select id="sort">
-        <option value="reco">Sort: Recommended</option>
-        <option value="price-asc">Price: Low to High</option>
-        <option value="price-desc">Price: High to Low</option>
-        <option value="name-asc">Name: A → Z</option>
-      </select>
-    </div>
-  </div>
-
-  <!-- Products -->
-  <main class="wrap">
-    <div id="product-grid" class="grid"></div>
-  </main>
-
-  <!-- Floating mini-cart (optional) -->
-  <a class="fab" href="/cart.html" title="Go to Cart">🛒<span id="fab-badge">0</span></a>
-
-  <footer class="footer">
-    <div>© Jain Super Mart • Kota</div>
-    <div>Support: 9928885103</div>
-  </footer>
-
-  <script src="/js/render.js"></script>
-</body>
-</html>
+document.addEventListener('DOMContentLoaded', ()=>{
+  wireUI();
+  loadProducts();
+  updateBadges();
+});
