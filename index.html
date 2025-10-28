@@ -1,25 +1,21 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Jain Super Mart</title>
-  <link rel="stylesheet" href="/style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Jain Super Mart — Kota Groceries</title>
+  <link rel="stylesheet" href="/style.css"/>
 </head>
 <body>
-
+  <!-- Top Bar -->
   <header class="topbar">
-    <h1>Jain Super Mart</h1>
-    <input id="search" placeholder="Search items..."
-           onkeyup="if(event.key==='Enter'){location.search='?q='+this.value}">
-    <a href="/cart.html">🛒 <span id="cart-badge">0</span></a>
-  </header>
+    <div class="brand">
+      <div class="logo">🛒</div>
+      <div class="brand-text">
+        <h1>Jain Super Mart</h1>
+        <p class="sub">Kota • Fast delivery</p>
+      </div>
+    </div>
 
-  <main class="wrap">
-    <!-- THIS LINE IS SUPER IMPORTANT -->
-    <div id="product-grid" class="grid"></div>
-  </main>
-
-  <script src="/js/render.js"></script>
-</body>
-</html>
+    <div class="search-wrap">
+      <input id="s
