@@ -1,96 +1,109 @@
-// js/render.js
-let ALL_ITEMS = [];
-let CURRENT_CAT = 'all';
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Jain Super Mart — Kota Groceries</title>
 
-function $(sel){ return document.querySelector(sel); }
-function $all(sel){ return [...document.querySelectorAll(sel)]; }
+  <!-- ✅ Professional fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=Poppins:wght@600;800&display=swap" rel="stylesheet">
 
-async function loadProducts() {
-  const grid = $('#product-grid');
-  const countEl = $('#count');
-  grid.innerHTML = '<p>Loading products…</p>';
+  <link rel="stylesheet" href="/style.css"/>
+</head>
+<body>
+  <!-- Top Bar -->
+  <header class="topbar">
+    <div class="brand">
+      <div class="logo">🛒</div>
+      <div class="brand-text">
+        <h1>Jain Super Mart</h1>
+        <p class="sub">Kota • Fast delivery</p>
+      </div>
+    </div>
 
-  try {
-    const res = await fetch('/data/products.json');
-    ALL_ITEMS = await res.json();
-    render();
-    countEl.textContent = `${ALL_ITEMS.length} items`;
-  } catch (e) {
-    console.error(e);
-    grid.innerHTML = '<p>Could not load products.</p>';
-  }
-}
+    <div class="search-wrap">
+      <input id="search" placeholder="Search rice, dal, oil, detergent…" />
+      <button id="searchBtn">Search</button>
+    </div>
 
-function render() {
-  const grid = $('#product-grid');
-  const q = ($('#search').value || '').toLowerCase();
+    <a class="cart-link" href="/cart.html" title="Cart">
+      <span>Cart</span> <span id="cart-badge">0</span>
+    </a>
+  </header>
 
-  let items = ALL_ITEMS.filter(p =>
-    (CURRENT_CAT === 'all' ? true : p.category === CURRENT_CAT) &&
-    (p.name.toLowerCase().includes(q) || p.brand.toLowerCase().includes(q) || p.category.toLowerCase().includes(q))
-  );
-
-  const sort = $('#sort')?.value || 'reco';
-  if (sort === 'price-asc') items.sort((a,b)=>a.price-b.price);
-  if (sort === 'price-desc') items.sort((a,b)=>b.price-a.price);
-  if (sort === 'name-asc') items.sort((a,b)=>a.name.localeCompare(b.name));
-
-  if (items.length === 0) {
-    grid.innerHTML = '<p>No products found.</p>';
-    return;
-  }
-
-  grid.innerHTML = items.map(p => `
-    <div class="card">
-      <img src="${p.img}" alt="${p.name}" loading="lazy">
-      <div class="content">
-        <h3>${p.name}</h3>
-        <p class="muted">${p.brand} • ${p.unit}</p>
-        <div class="row">
-          <span class="price">₹${p.price}</span>
-          <button onclick="addToCart('${p.id}','${p.name}',${p.price},'${p.img}')">Add</button>
+  <!-- ✅ Banner / Hero Carousel -->
+  <section class="hero">
+    <div class="slides" id="slides">
+      <div class="slide active" style="--bg:url('https://images.unsplash.com/photo-1504754524776-8f4f37790ca0?q=80&w=1600&auto=format');">
+        <div class="overlay">
+          <h2>Daily groceries at honest prices</h2>
+          <p>Fresh staples • Trusted brands • Same-day delivery in Kota</p>
+          <a class="cta" href="#catalog">Shop now</a>
+        </div>
+      </div>
+      <div class="slide" style="--bg:url('https://images.unsplash.com/photo-1511690743698-d9d85f2fbf38?q=80&w=1600&auto=format');">
+        <div class="overlay">
+          <h2>Top brands, fast delivery</h2>
+          <p>Atta, rice, dal, oils, spices & more</p>
+          <a class="cta" href="#catalog">Browse categories</a>
+        </div>
+      </div>
+      <div class="slide" style="--bg:url('https://images.unsplash.com/photo-1586201375761-83865001e31b?q=80&w=1600&auto=format');">
+        <div class="overlay">
+          <h2>Everyday essentials</h2>
+          <p>Detergent, tea & coffee, salt & sugar</p>
+          <a class="cta" href="#catalog">See deals</a>
         </div>
       </div>
     </div>
-  `).join('');
-}
+    <div class="dots" id="dots"></div>
+  </section>
 
-function addToCart(id, name, price, img){
-  const cart = JSON.parse(localStorage.getItem('cart')||'[]');
-  const it = cart.find(x=>x.id===id);
-  if (it) it.qty += 1; else cart.push({id,name,price,img,qty:1});
-  localStorage.setItem('cart', JSON.stringify(cart));
-  updateBadges();
-}
+  <!-- ✅ Trust strip -->
+  <section class="trust">
+    <div>🚚 Same-day delivery</div>
+    <div>✅ Quality checked</div>
+    <div>💳 Cash on delivery</div>
+    <div>📞 Support: 9928885103</div>
+  </section>
 
-function updateBadges(){
-  const cart = JSON.parse(localStorage.getItem('cart')||'[]');
-  const n = cart.reduce((s,i)=>s+i.qty,0);
-  const badge = $('#cart-badge');
-  const fab = $('#fab-badge');
-  if (badge) badge.textContent = n;
-  if (fab) fab.textContent = n;
-}
+  <!-- ✅ Category tiles -->
+  <section class="tiles" id="catalog">
+    <button class="tile" data-cat="atta-flour">🥖 Atta & Flour</button>
+    <button class="tile" data-cat="rice">🍚 Rice</button>
+    <button class="tile" data-cat="dal-pulses">🫘 Dal & Pulses</button>
+    <button class="tile" data-cat="oil-ghee">🛢️ Oil & Ghee</button>
+    <button class="tile" data-cat="salt-sugar">🧂 Salt & Sugar</button>
+    <button class="tile" data-cat="tea-coffee">☕ Tea & Coffee</button>
+    <button class="tile" data-cat="cleaning-detergent">🧼 Detergent</button>
+    <button class="tile" data-cat="all">📦 View All</button>
+  </section>
 
-function wireUI(){
-  // search actions
-  $('#search').addEventListener('keyup', (e)=>{ if(e.key==='Enter') render(); });
-  $('#searchBtn')?.addEventListener('click', ()=> render());
-  $('#sort')?.addEventListener('change', ()=> render());
+  <!-- Sort row -->
+  <div class="toolbar">
+    <strong id="count">0 items</strong>
+    <select id="sort">
+      <option value="reco">Sort: Recommended</option>
+      <option value="price-asc">Price: Low to High</option>
+      <option value="price-desc">Price: High to Low</option>
+      <option value="name-asc">Name: A → Z</option>
+    </select>
+  </div>
 
-  // chips
-  $all('.chip').forEach(btn=>{
-    btn.addEventListener('click', ()=>{
-      $all('.chip').forEach(c=>c.classList.remove('active'));
-      btn.classList.add('active');
-      CURRENT_CAT = btn.dataset.cat;
-      render();
-    });
-  });
-}
+  <!-- Products -->
+  <main class="wrap">
+    <div id="product-grid" class="grid"></div>
+  </main>
 
-document.addEventListener('DOMContentLoaded', ()=>{
-  wireUI();
-  loadProducts();
-  updateBadges();
-});
+  <!-- Floating mini-cart -->
+  <a class="fab" href="/cart.html" title="Go to Cart">🛒<span id="fab-badge">0</span></a>
+
+  <footer class="footer">
+    <div>© Jain Super Mart • Kota</div>
+    <div>Support: 9928885103</div>
+  </footer>
+
+  <script src="/js/render.js"></script>
+  <script src="/js/ui.js"></script>
+</body>
+</html>
