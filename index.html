@@ -18,4 +18,63 @@
     </div>
 
     <div class="search-wrap">
-      <input id="s
+      <input id="search" placeholder="Search rice, dal, oil, detergent…" />
+      <button id="searchBtn">Search</button>
+    </div>
+
+    <a class="cart-link" href="/cart.html" title="Cart">
+      <span>Cart</span> <span id="cart-badge">0</span>
+    </a>
+  </header>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="hero-text">
+      <h2>Daily groceries at honest prices</h2>
+      <p>Fresh staples • Trusted brands • Same-day delivery in Kota</p>
+    </div>
+  </section>
+
+  <!-- Category chips -->
+  <nav class="chips" id="chips">
+    <button class="chip active" data-cat="all">All</button>
+    <button class="chip" data-cat="atta-flour">Atta & Flour</button>
+    <button class="chip" data-cat="rice">Rice</button>
+    <button class="chip" data-cat="dal-pulses">Dal & Pulses</button>
+    <button class="chip" data-cat="oil-ghee">Oil & Ghee</button>
+    <button class="chip" data-cat="salt-sugar">Salt & Sugar</button>
+    <button class="chip" data-cat="tea-coffee">Tea & Coffee</button>
+    <button class="chip" data-cat="cleaning-detergent">Detergent</button>
+  </nav>
+
+  <!-- Sort row -->
+  <div class="toolbar">
+    <div class="left">
+      <strong id="count">0 items</strong>
+    </div>
+    <div class="right">
+      <select id="sort">
+        <option value="reco">Sort: Recommended</option>
+        <option value="price-asc">Price: Low to High</option>
+        <option value="price-desc">Price: High to Low</option>
+        <option value="name-asc">Name: A → Z</option>
+      </select>
+    </div>
+  </div>
+
+  <!-- Products -->
+  <main class="wrap">
+    <div id="product-grid" class="grid"></div>
+  </main>
+
+  <!-- Floating mini-cart (optional) -->
+  <a class="fab" href="/cart.html" title="Go to Cart">🛒<span id="fab-badge">0</span></a>
+
+  <footer class="footer">
+    <div>© Jain Super Mart • Kota</div>
+    <div>Support: 9928885103</div>
+  </footer>
+
+  <script src="/js/render.js"></script>
+</body>
+</html>
