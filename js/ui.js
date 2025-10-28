@@ -1,10 +1,27 @@
-// js/ui.js  -> banner slider + tiles filter wiring
-let si = 0; // slide index
+// js/ui.js  — reliable banner + tiles hookup
+let si = 0; // current slide
+
+function preload(url){
+  const img = new Image();
+  img.src = url;
+}
 
 function initSlider(){
   const slides = [...document.querySelectorAll('.slide')];
   const dotsWrap = document.getElementById('dots');
   if (!slides.length) return;
+
+  // set background images from data-bg and preload
+  slides.forEach(s=>{
+    const url = s.getAttribute('data-bg');
+    if (url) {
+      s.style.backgroundImage = `url("${url}")`;
+      s.style.backgroundSize = 'cover';
+      s.style.backgroundPosition = 'center';
+      s.style.backgroundRepeat = 'no-repeat';
+      preload(url);
+    }
+  });
 
   // dots
   slides.forEach((_,i)=>{
@@ -20,20 +37,17 @@ function initSlider(){
   }
 
   show(0);
-  setInterval(()=> show((si+1)%slides.length), 4000);
+  setInterval(()=> show((si+1) % slides.length), 4000);
 }
 
 function initTiles(){
-  // clicking a tile sets category and scrolls to products
   document.querySelectorAll('.tile').forEach(btn=>{
     btn.addEventListener('click', ()=>{
       const cat = btn.dataset.cat || 'all';
-      window.CURRENT_CAT = cat; // use global from render.js
+      window.CURRENT_CAT = cat;             // from render.js
       const search = document.getElementById('search');
       if (search) search.value = '';
-      // trigger re-render
       if (typeof window.render === 'function') window.render();
-      // smooth scroll to products
       document.getElementById('product-grid')?.scrollIntoView({behavior:'smooth'});
     });
   });
