@@ -1,0 +1,32 @@
+[
+  {
+    "id": "atta-ashirvaad-5kg",
+    "name": "Atta (Aashirvaad) 5kg",
+    "brand": "Aashirvaad",
+    "category": "atta-flour",
+    "price": 265,
+    "unit": "5 kg",
+    "img": "https://images.unsplash.com/photo-1586201375761-83865001e31b?q=80&w=800&auto=format",
+    "desc": "Fresh whole wheat flour."
+  },
+  {
+    "id": "rice-basmati-1kg",
+    "name": "Basmati Rice 1kg",
+    "brand": "Dawat",
+    "category": "rice",
+    "price": 145,
+    "unit": "1 kg",
+    "img": "https://images.unsplash.com/photo-1604908176997-43165144d70d?q=80&w=800&auto=format",
+    "desc": "Long-grain aromatic rice."
+  },
+  {
+    "id": "dal-toor-1kg",
+    "name": "Toor Dal 1kg",
+    "brand": "Local",
+    "category": "dal-pulses",
+    "price": 159,
+    "unit": "1 kg",
+    "img": "https://images.unsplash.com/photo-1623065427900-89ad29d14035?q=80&w=800&auto=format",
+    "desc": "Clean, quality pulses."
+  }
+]
