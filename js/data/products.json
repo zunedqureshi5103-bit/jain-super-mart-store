@@ -26,7 +26,14 @@
     "category": "dal-pulses",
     "price": 159,
     "unit": "1 kg",
-    "img": "https://images.unsplash.com/photo-1623065427900-89ad29d14035?q=80&w=800&auto=format",
-    "desc": "Clean, quality pulses."
-  }
-]
+    {
+    {
+  "id": "aashirvaad-shudh-chakki-atta-5kg",
+  "name": "Aashirvaad Shudh Chakki Atta 5 kg",
+  "brand": "Aashirvaad",
+  "category": "atta-flour",
+  "price": 265,
+  "unit": "5 kg",
+  "img": "https://images.example.com/aashirvaad-atta-5kg.jpg",
+  "desc": "Premium whole wheat flour from Aashirvaad – soft rotis every day."
+}
